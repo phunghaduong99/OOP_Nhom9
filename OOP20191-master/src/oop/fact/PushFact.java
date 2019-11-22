@@ -1,58 +1,393 @@
 package oop.fact;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 
-import com.arangodb.ArangoDB;
+import com.arangodb.ArangoDBException;
+import com.arangodb.ArangoDatabase;
+import com.arangodb.entity.BaseDocument;
 
+import oop.beans.Aggrement;
+import oop.beans.Country;
+import oop.beans.Event;
+import oop.beans.Location;
+import oop.beans.Organization;
+import oop.beans.Person;
+import oop.beans.Time;
 import oop.connectDB.ConnectArangoDB;
-import oop.pushDataInDB.PushData;
 
-
-
-public class PushFact implements PushData{
-	private ArrayList<Fact> facts;
-
-	public PushFact(ArrayList<Fact> facts) {
-		this.facts= facts;
+public class PushFact {
+	String collectionName;
+	int m;
+	public PushFact(String collectionName, int m) {
+		this.collectionName = collectionName;
+		this.m = m;
 	}
 
-	@Override
-	public void pushData(int n) {
-
-		com.arangodb.ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
-		String sql = "INSERT INTO relationShip(id,entity1, relationShip, entity2) VALUES (?,?,?,?);";
-		PreparedStatement preparedStatement;
-
+	public void pushFactInDataBase(String subject, String object, String quanhe, String time, String loai ) {
+		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
 		try {
-			preparedStatement = (PreparedStatement) ((Connection) arangoDatabase).prepareStatement(sql);
-			((Connection) arangoDatabase).setAutoCommit(false); // tắt chế độ tự động ký thác sql sau mỗi lần transaction
-			int count = 1;
-			for (int k = 0; k < n; k += 1) {
-
-				preparedStatement.setInt(1, k + 1);
-				preparedStatement.setString(2, facts.get(k).getEntity1());
-				preparedStatement.setString(3, facts.get(k).getFact());
-				preparedStatement.setString(4, facts.get(k).getEntity2());
-
-				preparedStatement.addBatch();
-				count++;
-
-				count--;
-				if (count % 600 == 0) { // cứ sau 600 bản ghi được đưa vào Batch thì sẽ được đẩy lên server
-					preparedStatement.executeBatch(); // đẩy 600 bản ghi lên server
-					((Connection) arangoDatabase).commit(); // lưu lại trạng thái là đã đẩy xong
-					System.out.println(k);
+			ArrayList <BaseDocument> listdocs = new ArrayList <BaseDocument>();
+			for (int k = 0; k < m; k ++) {
+				BaseDocument myObject = new BaseDocument();
+				myObject.setKey(String.valueOf(k) + "_1");
+				myObject.addAttribute("Subject", subject);
+				myObject.addAttribute("Object", object);
+				myObject.addAttribute("QuanHe", quanhe);
+				myObject.addAttribute("Time", time);
+				myObject.addAttribute("LoaiQuanHe", loai);
+				listdocs.add(myObject);
+				if(k % 500 == 0) {
+					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+					listdocs.clear();
 				}
-				count++;
 			}
-			preparedStatement.executeBatch(); // số batch < 600 được đẩy nốt lên server
-			((Connection) arangoDatabase).commit();
-			preparedStatement.close();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
+			arangoDatabase.collection(collectionName).insertDocuments(listdocs);
 		}
+		catch (ArangoDBException e) {
+			System.err.println("Failed to import Fact: "   + e.getMessage());
+		}
+	}
+	public void pushIntoDatabase(ArrayList<Organization> organizations,
+			ArrayList<Time> times ,
+			ArrayList<Country> countrys,
+			ArrayList<Event> events ,
+			ArrayList<Person> persons,
+			ArrayList<Location> locations,
+			ArrayList<Aggrement> aggrements) 
+	{
+		
+	}
+	public void gap_go(ArrayList<Person> a, ArrayList<Person> b, ArrayList<Time> c) {
+		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
+		Random rd = new Random();
+		int n = a.size();
+		try {
+			ArrayList <BaseDocument> listdocs = new ArrayList <BaseDocument>();
+			for (int k = 0; k < m; k ++) {
+				int randomS = rd.nextInt(n);
+				int randomO = rd.nextInt(n);
+				int randomT = rd.nextInt(n);
+				BaseDocument myObject = new BaseDocument();
+				myObject.setKey(String.valueOf(k) + "_1");
+				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
+				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
+				myObject.addAttribute("QuanHe", "gap_go");
+				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				listdocs.add(myObject);
+				if(k % 500 == 0) {
+					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+					listdocs.clear();
+				}
+			}
+			arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+		}
+		catch (ArangoDBException e) {
+			System.err.println("Failed to import Fact: "   + e.getMessage());
+		}
+		
+	}
+
+	public void to_chuc(ArrayList<Person> a, ArrayList<Event> b, ArrayList<Time> c) {
+		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
+		Random rd = new Random();
+		int n = a.size();
+		try {
+			ArrayList <BaseDocument> listdocs = new ArrayList <BaseDocument>();
+			for (int k = 0; k < m; k ++) {
+				int randomS = rd.nextInt(n);
+				int randomO = rd.nextInt(n);
+				int randomT = rd.nextInt(n);
+				BaseDocument myObject = new BaseDocument();
+				myObject.setKey(String.valueOf(k) + "_2");
+				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
+				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
+				myObject.addAttribute("QuanHe", "to_chuc");
+				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				listdocs.add(myObject);
+				if(k % 500 == 0) {
+					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+					listdocs.clear();
+				}
+			}
+			arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+		}
+		catch (ArangoDBException e) {
+			System.err.println("Failed to import Fact: "   + e.getMessage());
+		}
+	}
+
+	public void ky_thoa_thuan(ArrayList<Country> a, ArrayList<Country> b, ArrayList<Time> c) {
+		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
+		Random rd = new Random();
+		int n = a.size();
+		try {
+			ArrayList <BaseDocument> listdocs = new ArrayList <BaseDocument>();
+			for (int k = 0; k < m; k ++) {
+				int randomS = rd.nextInt(n);
+				int randomO = rd.nextInt(n);
+				int randomT = rd.nextInt(n);
+				BaseDocument myObject = new BaseDocument();
+				myObject.setKey(String.valueOf(k) + "_3");
+				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
+				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
+				myObject.addAttribute("QuanHe", "ky_thoa_thuan");
+				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				listdocs.add(myObject);
+				if(k % 500 == 0) {
+					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+					listdocs.clear();
+				}
+			}
+			arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+		}
+		catch (ArangoDBException e) {
+			System.err.println("Failed to import Fact: "   + e.getMessage());
+		}
+	}
+
+	public void tham_gia(ArrayList<Person> a, ArrayList<Organization> b, ArrayList<Time> c) {
+		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
+		Random rd = new Random();
+		int n = a.size();
+		try {
+			ArrayList <BaseDocument> listdocs = new ArrayList <BaseDocument>();
+			for (int k = 0; k < m; k ++) {
+				int randomS = rd.nextInt(n);
+				int randomO = rd.nextInt(n);
+				int randomT = rd.nextInt(n);
+				BaseDocument myObject = new BaseDocument();
+				myObject.setKey(String.valueOf(k) + "_4");
+				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
+				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
+				myObject.addAttribute("QuanHe", "tham_gia");
+				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				listdocs.add(myObject);
+				if(k % 500 == 0) {
+					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+					listdocs.clear();
+				}
+			}
+			arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+		}
+		catch (ArangoDBException e) {
+			System.err.println("Failed to import Fact: "   + e.getMessage());
+		}
+	}
+	
+	public void dien_ra_tai(ArrayList<Event> a, ArrayList<Country> b, ArrayList<Time> c) {
+		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
+		Random rd = new Random();
+		int n = a.size();
+		try {
+			ArrayList <BaseDocument> listdocs = new ArrayList <BaseDocument>();
+			for (int k = 0; k < m; k ++) {
+				int randomS = rd.nextInt(n);
+				int randomO = rd.nextInt(n);
+				int randomT = rd.nextInt(n);
+				BaseDocument myObject = new BaseDocument();
+				myObject.setKey(String.valueOf(k) + "_5");
+				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
+				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
+				myObject.addAttribute("QuanHe", "dien_ra_tai");
+				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				listdocs.add(myObject);
+				if(k % 500 == 0) {
+					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+					listdocs.clear();
+				}
+			}
+			arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+		}
+		catch (ArangoDBException e) {
+			System.err.println("Failed to import Fact: "   + e.getMessage());
+		}
+	}
+
+	public void ung_ho(ArrayList<Person> a, ArrayList<Aggrement> b, ArrayList<Time> c) {
+		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
+		Random rd = new Random();
+		int n = a.size();
+		try {
+			ArrayList <BaseDocument> listdocs = new ArrayList <BaseDocument>();
+			for (int k = 0; k < m; k ++) {
+				int randomS = rd.nextInt(n);
+				int randomO = rd.nextInt(n);
+				int randomT = rd.nextInt(n);
+				BaseDocument myObject = new BaseDocument();
+				myObject.setKey(String.valueOf(k) + "_6");
+				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
+				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
+				myObject.addAttribute("QuanHe", "ung_ho");
+				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				listdocs.add(myObject);
+				if(k % 500 == 0) {
+					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+					listdocs.clear();
+				}
+			}
+			arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+		}
+		catch (ArangoDBException e) {
+			System.err.println("Failed to import Fact: "   + e.getMessage());
+		}
+	}
+
+	public void phan_doi(ArrayList<Person> a, ArrayList<Aggrement> b, ArrayList<Time> c) {
+		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
+		Random rd = new Random();
+		int n = a.size();
+		try {
+			ArrayList <BaseDocument> listdocs = new ArrayList <BaseDocument>();
+			for (int k = 0; k < m; k ++) {
+				int randomS = rd.nextInt(n);
+				int randomO = rd.nextInt(n);
+				int randomT = rd.nextInt(n);
+				BaseDocument myObject = new BaseDocument();
+				myObject.setKey(String.valueOf(k) + "_7");
+				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
+				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
+				myObject.addAttribute("QuanHe", "phan_doi");
+				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				listdocs.add(myObject);
+				if(k % 500 == 0) {
+					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+					listdocs.clear();
+				}
+			}
+			arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+		}
+		catch (ArangoDBException e) {
+			System.err.println("Failed to import Fact: "   + e.getMessage());
+		}
+	}
+
+	public void phat_bieu_tai(ArrayList<Person> a, ArrayList<Person> b, ArrayList<Time> c) {
+		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
+		Random rd = new Random();
+		int n = a.size();
+		try {
+			ArrayList <BaseDocument> listdocs = new ArrayList <BaseDocument>();
+			for (int k = 0; k < m; k ++) {
+				int randomS = rd.nextInt(n);
+				int randomO = rd.nextInt(n);
+				int randomT = rd.nextInt(n);
+				BaseDocument myObject = new BaseDocument();
+				myObject.setKey(String.valueOf(k) + "_8");
+				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
+				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
+				myObject.addAttribute("QuanHe", "phat_bieu_tai");
+				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				listdocs.add(myObject);
+				if(k % 500 == 0) {
+					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+					listdocs.clear();
+				}
+			}
+			arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+		}
+		catch (ArangoDBException e) {
+			System.err.println("Failed to import Fact: "   + e.getMessage());
+		}
+	}
+
+	public void cang_thang_voi(ArrayList<Person> a, ArrayList<Person> b, ArrayList<Time> c) {
+		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
+		Random rd = new Random();
+		int n = a.size();
+		try {
+			ArrayList <BaseDocument> listdocs = new ArrayList <BaseDocument>();
+			for (int k = 0; k < m; k ++) {
+				int randomS = rd.nextInt(n);
+				int randomO = rd.nextInt(n);
+				int randomT = rd.nextInt(n);
+				BaseDocument myObject = new BaseDocument();
+				myObject.setKey(String.valueOf(k) + "_9");
+				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
+				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
+				myObject.addAttribute("QuanHe", "cang_thang_voi");
+				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				listdocs.add(myObject);
+				if(k % 500 == 0) {
+					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+					listdocs.clear();
+				}
+			}
+			arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+		}
+		catch (ArangoDBException e) {
+			System.err.println("Failed to import Fact: "   + e.getMessage());
+		}
+	}
+
+	public void huy_bo(ArrayList<Person> a, ArrayList<Person> b, ArrayList<Time> c) {
+		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
+		Random rd = new Random();
+		int n = a.size();
+		try {
+			ArrayList <BaseDocument> listdocs = new ArrayList <BaseDocument>();
+			for (int k = 0; k < m; k ++) {
+				int randomS = rd.nextInt(n);
+				int randomO = rd.nextInt(n);
+				int randomT = rd.nextInt(n);
+				BaseDocument myObject = new BaseDocument();
+				myObject.setKey(String.valueOf(k) + "_10");
+				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
+				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
+				myObject.addAttribute("QuanHe", "huy_bo");
+				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				listdocs.add(myObject);
+				if(k % 500 == 0) {
+					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+					listdocs.clear();
+				}
+			}
+			arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+		}
+		catch (ArangoDBException e) {
+			System.err.println("Failed to import Fact: "   + e.getMessage());
+		}
+	}
+
+	public void dam_phan_voi(ArrayList<Person> a, ArrayList<Person> b, ArrayList<Time> c) {
+		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
+		Random rd = new Random();
+		int n = a.size();
+		try {
+			ArrayList <BaseDocument> listdocs = new ArrayList <BaseDocument>();
+			for (int k = 0; k < m; k ++) {
+				int randomS = rd.nextInt(n);
+				int randomO = rd.nextInt(n);
+				int randomT = rd.nextInt(n);
+				BaseDocument myObject = new BaseDocument();
+				myObject.setKey(String.valueOf(k) + "_11");
+				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
+				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
+				myObject.addAttribute("QuanHe", "dam_phan_voi");
+				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				listdocs.add(myObject);
+				if(k % 500 == 0) {
+					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+					listdocs.clear();
+				}
+			}
+			arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+		}
+		catch (ArangoDBException e) {
+			System.err.println("Failed to import Fact: "   + e.getMessage());
+		}
+	}
+	
+	public String getCollectionName() {
+		return collectionName;
+	}
+	public void setCollectionName(String collectionName) {
+		this.collectionName = collectionName;
+	}
+	public int getM() {
+		return m;
+	}
+	public void setM(int m) {
+		this.m = m;
 	}
 }

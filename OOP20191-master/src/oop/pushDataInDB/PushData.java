@@ -1,5 +1,5 @@
 package oop.pushDataInDB;
 
 public interface PushData {
-	void pushData(int n);
+	void pushData(int n, String collectionName);
 }

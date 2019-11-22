@@ -4,14 +4,20 @@ import java.util.ArrayList;
 
 import oop.beans.Aggrement;
 import oop.beans.Country;
+import oop.beans.Entity;
 import oop.beans.Event;
 import oop.beans.Location;
 import oop.beans.Organization;
 import oop.beans.Person;
 import oop.beans.Time;
+import oop.fact.Fact;
 import oop.fact.GenerateFact;
 import oop.fact.PushFact;
+import oop.generatedata.GenerateCountries;
+import oop.generatedata.GenerateEvents;
+import oop.generatedata.GeneratePersons;
 import oop.generatedata.GetData;
+import oop.pushDataInDB.Collection;
 import oop.pushDataInDB.PushAggrement;
 import oop.pushDataInDB.PushCountries;
 import oop.pushDataInDB.PushData;
@@ -32,38 +38,75 @@ public class PushDataInDatabase {
 	public static void save(int n, int m) {
 		
 		GetData getData = new GetData(n);
+		ArrayList<Organization> organizations = getData.getOrganizations();
 		ArrayList<Time> times = getData.getTimes();
 		ArrayList<Country> countrys = getData.getCountries();
 		ArrayList<Event> events = getData.getEvents();
 		ArrayList<Person> persons = getData.getPersons();
 		ArrayList<Location> locations = getData.getLocations();
 		ArrayList<Aggrement> aggrements = getData.getAggrements();
-		ArrayList<Organization> organizations = getData.getOrganizations();
-		organizations.get(2).printData();
 		
-//		PushData pushData = new PushOrganizations(organizations);
-//		pushData.pushData(n);
-//		
-//		pushData = new PushAggrement(aggrements);
-//		pushData.pushData(n);
-//		
-//		pushData = new PushPersons(persons);
-//		pushData.pushData(n);
-//		
-//		pushData = new PushTimes(times);
-//		pushData.pushData(n);
-//		
-//		pushData = new PushCountries(countrys);
-//		pushData.pushData(n);
-//		
-//		pushData = new PushLocations(locations);
-//		pushData.pushData(n);
-//		
-//		pushData = new PushEvents(events);
-//		pushData.pushData(n);
-//		
-//		GenerateFact generateFact = new GenerateFact(m/11);      // vì có  11 hàm sinh quan hệ nên số lượng mỗi 
-//																		//quan hệ sinh ra sẽ là (tổng qhe)/11
+		Collection coll = new Collection();
+		coll.deleteCollection("Organization");
+		coll.deleteCollection("Time");
+		coll.deleteCollection("Country");
+		coll.deleteCollection("Event");
+		coll.deleteCollection("Person");
+		coll.deleteCollection("Location");
+		coll.deleteCollection("Agreement");
+		coll.deleteCollection("Fact");
+		
+		coll.createCollection("Organization");
+		coll.createCollection("Time");
+		coll.createCollection("Country");
+		coll.createCollection("Event");
+		coll.createCollection("Person");
+		coll.createCollection("Location");
+		coll.createCollection("Agreement");
+		coll.createCollection("Fact");
+		
+		long start, end;
+
+		start = System.currentTimeMillis(); // start lấy thời gian theo millisecond
+
+		PushData pushData = new PushOrganizations(organizations);
+		pushData.pushData(n, "Organization");
+		
+		pushData = new PushTimes(times);
+		pushData.pushData(n, "Time");
+
+		pushData = new PushCountries(countrys);
+		pushData.pushData(n, "Country");
+		
+		pushData = new PushEvents(events);
+		pushData.pushData(n, "Event");
+		
+		pushData = new PushPersons(persons);
+		pushData.pushData(n, "Person");
+		
+		pushData = new PushLocations(locations);
+		pushData.pushData(n, "Location");
+		
+		pushData = new PushAggrement(aggrements);
+		pushData.pushData(n, "Agreement");
+		
+		PushFact fact = new PushFact("Fact", m);
+		fact.gap_go(persons, persons, times);
+		fact.to_chuc(persons, events, times);
+		fact.ky_thoa_thuan(countrys, countrys, times);
+		fact.tham_gia(persons, organizations, times);
+		fact.dien_ra_tai(events, countrys, times);
+		fact.ung_ho(persons, aggrements, times);
+		fact.phan_doi(persons, aggrements, times);
+		fact.phat_bieu_tai(persons, persons, times);
+		fact.cang_thang_voi(persons, persons, times);
+		fact.huy_bo(persons, persons, times);
+		fact.dam_phan_voi(persons, persons, times);
+		end = System.currentTimeMillis(); // start lấy thời gian theo millisecond
+		
+		System.out.println("push Data" + (end- start));
+		
+		
 //		generateFact.dien_Ra_Tai(events, locations);
 //		
 //		pushData = new PushFact(generateFact.getFacts());

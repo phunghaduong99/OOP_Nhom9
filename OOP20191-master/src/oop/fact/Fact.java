@@ -1,43 +1,55 @@
 package oop.fact;
 
+import oop.beans.Entity;
+import oop.beans.Time;
 
-public class Fact {
+public class Fact<T,V> {
 
-	private String entity1;
-	private String fact;
-	private String entity2;
-
+	private T subject;
+	private String quanhe;
+	private V object;
+	private Entity time;
 	
-
-	public Fact(String entity1, String fact, String entity2) {
+	public  Fact(T t, String quanhe, V v, Time time) {
 		super();
-		this.entity1 = entity1;
-		this.fact = fact;
-		this.entity2 = entity2;
+		this.subject = t;
+		this.quanhe = quanhe;
+		this.object = v;
+		this.time = time;
 	}
 
-	public String getEntity1() {
-		return entity1;
+	public T getSubject() {
+		return subject;
 	}
 
-	public void setEntity1(String entity1) {
-		this.entity1 = entity1;
+	public void setSubject(T subject) {
+		this.subject = subject;
 	}
 
-	public String getFact() {
-		return fact;
+	public String getQuanhe() {
+		return quanhe;
 	}
 
-	public void setFact(String fact) {
-		this.fact = fact;
+	public void setQuanhe(String quanhe) {
+		this.quanhe = quanhe;
 	}
 
-	public String getEntity2() {
-		return entity2;
+	public V getObject() {
+		return object;
 	}
 
-	public void setEntity2(String entity2) {
-		this.entity2 = entity2;
+	public void setObject(V object) {
+		this.object = object;
 	}
+
+	public Entity getTime() {
+		return time;
+	}
+
+	public void setTime(Entity time) {
+		this.time = time;
+	}
+
+
 
 }

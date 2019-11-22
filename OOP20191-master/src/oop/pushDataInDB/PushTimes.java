@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
+import com.arangodb.entity.BaseDocument;
 
 import oop.beans.Time;
 import oop.connectDB.ConnectArangoDB;
@@ -19,41 +21,33 @@ public class PushTimes implements PushData{
 		this.times = times;
 	}
 
+
 	@Override
-	public void pushData(int n) {
-
+	public void pushData(int n, String collectionName) {
 		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
-		String sql = "INSERT INTO Time(id, id_name, time, description) VALUES (?,?,?,?,?);";
-		PreparedStatement preparedStatement;
-
 		try {
-			preparedStatement = (PreparedStatement) ((Connection) arangoDatabase).prepareStatement(sql);
-			((Connection) arangoDatabase).setAutoCommit(false); // tắt chế độ tự động ký thác sql sau mỗi lần transaction
-			int count = 1;
-			for (int k = 0; k < n; k += 1) {
-				preparedStatement.setInt(1, k + 1);
-				preparedStatement.setString(2, times.get(k).getDinhDanh());
-				preparedStatement.setString(3, times.get(k).getNhanHienThi());
-				preparedStatement.setString(3, times.get(k).getMoTa());
-				preparedStatement.setString(4, times.get(k).getTime());
-				preparedStatement.addBatch();
-				count++;
-
-				count--;
-				if (count % 600 == 0) { // cứ sau 600 bản ghi được đưa vào Batch thì sẽ được đẩy lên server
-					preparedStatement.executeBatch(); // đẩy 600 bản ghi lên server
-					((Connection) arangoDatabase).commit(); // lưu lại trạng thái là đã đẩy xong
-					System.out.println(k);
+			ArrayList <BaseDocument> listdocs = new ArrayList <BaseDocument>();
+			for (int k = 0; k < n; k ++) {
+				BaseDocument myObject = new BaseDocument();
+				myObject.setKey(String.valueOf(k));
+				myObject.addAttribute("NhanHienThi", times.get(k).getNhanHienThi());
+				myObject.addAttribute("DinhDanh", times.get(k).getDinhDanh());
+				myObject.addAttribute("MoTa", times.get(k).getMoTa());
+				myObject.addAttribute("Time", times.get(k).getTime());
+				listdocs.add(myObject);
+				if(k % 500 == 0) {
+					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
+					listdocs.clear();
 				}
-				count++;
 			}
-			preparedStatement.executeBatch(); // số batch < 600 được đẩy nốt lên server
-			((Connection) arangoDatabase).commit();
-			preparedStatement.close();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
+			arangoDatabase.collection(collectionName).insertDocuments(listdocs);
 		}
+		catch (ArangoDBException e) {
+			System.err.println("Failed to create document: " + collectionName  + e.getMessage());
+		}
+		
 	}
+
 
 	
 }

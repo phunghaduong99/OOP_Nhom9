@@ -12,10 +12,9 @@ public class GenerateTimes implements GenerateData {
 	public List<Time> getData(int n) {
 		
 		List<Time> listTime = new ArrayList<Time>();
-		
+		Random rd = new Random();
+		ReadFile readFile = new ReadFile();
 		for (int i = 0; i < n; i++) {
-			Random rd = new Random();
-			ReadFile readFile = new ReadFile();
 			int random = rd.nextInt(n/15);
 			String nhanHienThi = readFile.randomDataInFile("./data/Aggrement_nhan.txt");
 			String dinhDanh = nhanHienThi + '_' + random;

@@ -11,9 +11,9 @@ public class GenerateOrganizations implements GenerateData {
 	public List<Organization> getData(int n) {
 		
 		List<Organization> listOrganization = new ArrayList<Organization>();
+		Random rd = new Random();
+		ReadFile readFile = new ReadFile();
 		for (int i = 0; i < n; i++) {
-			Random rd = new Random();
-			ReadFile readFile = new ReadFile();
 			int random = rd.nextInt(n); //-------------------------------------
 			String nhanHienThi = readFile.randomDataInFile("./data/Aggrement_nhan.txt");
 			String dinhDanh = nhanHienThi + '_' + random;
