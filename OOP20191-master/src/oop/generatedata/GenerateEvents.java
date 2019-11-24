@@ -2,9 +2,7 @@ package oop.generatedata;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import oop.beans.Country;
 import oop.beans.Event;
 
 public class GenerateEvents implements GenerateData {
@@ -12,16 +10,16 @@ public class GenerateEvents implements GenerateData {
 	public List<Event> getData(int n) {
 		ArrayList<Event> lisEvents = new ArrayList<Event>();
 		ReadFile readFile = new ReadFile();
-		Random rd = new Random();
+		List<String> nhanHienThi = readFile.randomDataInFile("./data/event/Event_nhan.txt");
+		List<String> dinhDanh = readFile.randomDataInFile("./data/event/Event_dinhDanh.txt");
+		List<String> moTa = readFile.randomDataInFile("./data/event/Event_moTa.txt");
+		List<String> link = readFile.randomDataInFile("./data/event/Event_link.txt");
+		List<String> time = readFile.randomDataInFile("./data/event/Event_time.txt");
+		List<String> location = readFile.randomDataInFile("./data/event/Event_location.txt");
 		for (int i = 0; i < n; i++) {
-			int random = rd.nextInt(n / 15);
-			String nhanHienThi = readFile.randomDataInFile("./data/event/Event_nhan.txt");
-			String dinhDanh = nhanHienThi + '_' + random;
-			String moTa = readFile.randomDataInFile("./data/event/Event_nhan.txt");
-			String link = readFile.randomDataInFile("./data/event/Event_nhan.txt");
-			String time = readFile.randomDataInFile("./data/event/Event_nhan.txt");
-			String location = readFile.randomDataInFile("./data/event/Event_nhan.txt");
-			Event event = new Event(dinhDanh, nhanHienThi, moTa, link, time, location);
+			Event event = new Event(readFile.getOneInListString(dinhDanh), readFile.getOneInListString(nhanHienThi),
+					readFile.getOneInListString(moTa), readFile.getOneInListString(link),
+					readFile.getOneInListString(time), readFile.getOneInListString(location));
 			lisEvents.add(event);
 		}
 		return lisEvents;

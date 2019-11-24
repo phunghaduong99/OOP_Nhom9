@@ -1,17 +1,11 @@
 package oop.pushDataInDB;
 
-
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
-
 import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.BaseDocument;
-
 import oop.beans.Event;
 import oop.connectDB.ConnectArangoDB;
-import java.sql.Connection;
 public class PushEvents implements PushData{
 	private ArrayList<Event> events;
 

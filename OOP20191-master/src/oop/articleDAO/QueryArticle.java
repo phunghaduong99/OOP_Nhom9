@@ -1,8 +1,11 @@
 package oop.articleDAO;
 
+import java.util.Map;
+
 import com.arangodb.ArangoCursor;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.BaseDocument;
+import com.arangodb.util.MapBuilder;
 
 import oop.connectDB.ConnectArangoDB;
 
@@ -12,11 +15,17 @@ public class QueryArticle {
 		this.database = ConnectArangoDB.getConnection();
 	}
 
-	public BaseDocument thongTinVe(String dinhDanh,String collection) {
-		//String query1="FOR t IN Person FILTER t.dinhDanh == \"Albert_Einstein\" return t";
-		String query="FOR t IN "+collection+" FILTER t.dinhDanh == \""+dinhDanh+"\" return t";
-		ArangoCursor<BaseDocument> cursor=database.query(query, null, null, BaseDocument.class);
-		return cursor.next();
+	public void thongTinVe(String nhanhienthi, String collum, String collection ) {
+		String query="FOR t IN "+collection +" FILTER t."+collum+ " == @name RETURN t";
+		Map<String, Object> bindVars = new MapBuilder().put("name", nhanhienthi).get();
+		ArangoCursor<BaseDocument> cursor=database.query(query, bindVars, null, BaseDocument.class);
+		cursor.forEachRemaining(aDocument -> {
+			System.out.println("NhanHienThi: " + aDocument.getAttribute("NhanHienThi"));
+			System.out.println("DinhDanh: " + aDocument.getAttribute("DinhDanh"));
+			System.out.println("MoTa: " + aDocument.getAttribute("MoTa"));
+			System.out.println();
+		  });
+//		return cursor.next();
 	}
 	
 	

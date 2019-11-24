@@ -21,7 +21,6 @@ public class PushCountries implements PushData{
 	@Override
 	public void pushData(int n, String collectionName) {
 		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
-	
 		try {
 			ArrayList <BaseDocument> listdocs = new ArrayList <BaseDocument>();
 			for (int k = 0; k < n; k ++) {
@@ -38,6 +37,7 @@ public class PushCountries implements PushData{
 			}
 			arangoDatabase.collection(collectionName).insertDocuments(listdocs);
 		}
+		
 		catch (ArangoDBException e) {
 			System.err.println("Failed to create document: " + collectionName  + e.getMessage());
 		}

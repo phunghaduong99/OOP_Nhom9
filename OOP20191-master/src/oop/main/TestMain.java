@@ -26,7 +26,7 @@ public class TestMain {
 
 		start = System.currentTimeMillis(); // start lấy thời gian theo millisecond
 
-		PushDataInDatabase.save(100, (int)(200/11));
+		PushDataInDatabase.save((int)(500000/7), (int)(200000/11));
 
 		end = System.currentTimeMillis(); // start lấy thời gian theo millisecond
 

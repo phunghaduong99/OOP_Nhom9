@@ -2,8 +2,6 @@ package oop.generatedata;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 import oop.beans.Time;
 
 public class GenerateTimes implements GenerateData {
@@ -12,20 +10,20 @@ public class GenerateTimes implements GenerateData {
 	public List<Time> getData(int n) {
 		
 		List<Time> listTime = new ArrayList<Time>();
-		Random rd = new Random();
 		ReadFile readFile = new ReadFile();
+		List<String> nhanHienThi = readFile.randomDataInFile("./data/time/Time_nhan.txt");
+		List<String> dinhDanh = readFile.randomDataInFile("./data/time/Time_dinhDanh.txt");
+		List<String> moTa = readFile.randomDataInFile("./data/time/Time_moTa.txt");
+		List<String> link = readFile.randomDataInFile("./data/time/Time_link.txt");
+		List<String> time = readFile.randomDataInFile("./data/time/Time_time.txt");
 		for (int i = 0; i < n; i++) {
-			int random = rd.nextInt(n/15);
-			String nhanHienThi = readFile.randomDataInFile("./data/Aggrement_nhan.txt");
-			String dinhDanh = nhanHienThi + '_' + random;
-			String moTa = readFile.randomDataInFile("./data/Aggrement_nhan.txt");
-			String link = readFile.randomDataInFile("./data/Aggrement_nhan.txt");
-			String time = readFile.randomDataInFile("./data/Aggrement_nhan.txt");
-			Time Time = new Time(dinhDanh, nhanHienThi, moTa, link, time);
-			listTime.add(Time);
+			Time timee = new Time(readFile.getOneInListString(dinhDanh), readFile.getOneInListString(nhanHienThi),
+					readFile.getOneInListString(moTa), readFile.getOneInListString(link), readFile.getOneInListString(time));
+			listTime.add(timee);
+
 		}
+
 		return listTime;
-		
 	}
 
 }

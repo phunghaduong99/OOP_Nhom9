@@ -24,8 +24,6 @@ public class Collection {
 	public void deleteCollection(String collectionName) {
 		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
 		try {
-			String aql = "FOR u IN "+collectionName+"\r\n" + 
-					"  REMOVE u IN "+ collectionName;
 			ArangoCollection myArangoCollection = arangoDatabase.collection(collectionName);
 			myArangoCollection.drop();
 			System.out.println("Collection dropped: " + collectionName );

@@ -16,7 +16,6 @@ public class ConnectArangoDB {
 		ArangoDB conn = new ArangoDB.Builder().timeout(100).host("127.0.0.1",8529).user("root").password("phunghaduong").useProtocol(Protocol.VST).build();
 		try {
 			database = conn.db(databaseName);
-			System.out.println("Connect database success!");
 		} catch (ArangoDBException e) {
 			System.out.println("Connect database fail!");
 		}

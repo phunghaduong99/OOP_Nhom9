@@ -2,28 +2,26 @@ package oop.generatedata;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 import oop.beans.Organization;
 
 public class GenerateOrganizations implements GenerateData {
 	@Override
 	public List<Organization> getData(int n) {
-		
+
 		List<Organization> listOrganization = new ArrayList<Organization>();
-		Random rd = new Random();
 		ReadFile readFile = new ReadFile();
+		List<String> nhanHienThi = readFile.randomDataInFile("./data/organization/Organization_nhan.txt");
+		List<String> dinhDanh = readFile.randomDataInFile("./data/organization/Organization_dinhDanh.txt");
+		List<String> moTa = readFile.randomDataInFile("./data/organization/Organization_moTa.txt");
+		List<String> link = readFile.randomDataInFile("./data/organization/Organization_link.txt");
+		List<String> truSo = readFile.randomDataInFile("./data/organization/Organization_truSo.txt");
+
 		for (int i = 0; i < n; i++) {
-			int random = rd.nextInt(n); //-------------------------------------
-			String nhanHienThi = readFile.randomDataInFile("./data/Aggrement_nhan.txt");
-			String dinhDanh = nhanHienThi + '_' + random;
-			String moTa = readFile.randomDataInFile("./data/Aggrement_nhan.txt");
-			String link = readFile.randomDataInFile("./data/Aggrement_nhan.txt");
-			String truSo = readFile.randomDataInFile("./data/Orgnization_headquaters.txt");
-			Organization Organization = new Organization(dinhDanh, nhanHienThi, moTa, link, truSo);
+			Organization Organization = new Organization(readFile.getOneInListString(dinhDanh),
+					readFile.getOneInListString(nhanHienThi), readFile.getOneInListString(moTa),
+					readFile.getOneInListString(link), readFile.getOneInListString(truSo));
 			listOrganization.add(Organization);
 		}
-		
 		return listOrganization;
 	}
 }

@@ -1,48 +1,33 @@
 package oop.generatedata;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+import java.util.stream.Stream;
 public class ReadFile {
 	// chọn ngẫu nhiên thực thể trong file
 		@SuppressWarnings("finally")
-		public List<String> listData(String path){
-			ArrayList<String> list = new ArrayList<String>();
-			try {
-				FileInputStream fis = new FileInputStream(path);
-				InputStreamReader isr = new InputStreamReader(fis);
-				BufferedReader bfr = new BufferedReader(isr);
-				String line = bfr.readLine();
-				while(line != null) {
+		public List<String> randomDataInFile(String path) {
+			List<String> list = new ArrayList<String>();
+			  
+			try(Stream<String> stream = Files.lines(Paths.get(path),StandardCharsets.UTF_8)){//đưa về dạng chuẩn utf8
+				stream.forEach(line ->{
 					list.add(line);
-					line = bfr .readLine(); 
-				}
-//				fis.close();
-//				isr.close();
-				bfr.close();
-			} catch (Exception e) {
+				});
+			}
+			catch (Exception e) {
 				e.printStackTrace();
 			}finally {
 				return list;
 			}
 		}
-		
-		public String randomDataInList(List<String> list,int n) {
+		public String getOneInListString(List<String> listString) {
+			List <String> list = listString;
 			Random rd = new Random();
-			return list.get(rd.nextInt(n));
+			int random = rd.nextInt(list.size());
+			return list.get(random);
 		}
-		
-		
-		public String randomDataInFile(String path) {
-			List<String> list = listData(path);
-			return randomDataInList(list, list.size());
-		}
-		
-
-
-
 }
