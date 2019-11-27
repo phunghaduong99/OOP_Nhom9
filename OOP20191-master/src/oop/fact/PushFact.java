@@ -7,14 +7,15 @@ import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.BaseDocument;
 
-import oop.beans.Aggrement;
-import oop.beans.Country;
-import oop.beans.Event;
-import oop.beans.Location;
-import oop.beans.Organization;
-import oop.beans.Person;
-import oop.beans.Time;
 import oop.connectDB.ConnectArangoDB;
+import oop.model.AggrementModel;
+import oop.model.CountryModel;
+import oop.model.EntityModel;
+import oop.model.EventModel;
+import oop.model.LocationModel;
+import oop.model.OrganizationModel;
+import oop.model.PersonModel;
+import oop.model.TimeModel;
 
 public class PushFact {
 	String collectionName;
@@ -25,9 +26,9 @@ public class PushFact {
 		this.m = m;
 	}
 
-	public void pushFactIntoDatabase(ArrayList<Organization> organizations, ArrayList<Time> times,
-			ArrayList<Country> countrys, ArrayList<Event> events, ArrayList<Person> persons,
-			ArrayList<Location> locations, ArrayList<Aggrement> aggrements) {
+	public void pushFactIntoDatabase(ArrayList<OrganizationModel> organizations, ArrayList<TimeModel> times,
+			ArrayList<CountryModel> countrys, ArrayList<EventModel> events, ArrayList<PersonModel> persons,
+			ArrayList<LocationModel> locations, ArrayList<AggrementModel> aggrements) {
 		this.gap_go(persons, persons, times);
 		this.to_chuc(persons, events, times);
 		this.ky_thoa_thuan(countrys, countrys, times);
@@ -41,7 +42,7 @@ public class PushFact {
 		this.dam_phan_voi(persons, persons, times);
 	}
 
-	public void gap_go(ArrayList<Person> a, ArrayList<Person> b, ArrayList<Time> c) {
+	public void gap_go(ArrayList<PersonModel> a, ArrayList<PersonModel> b, ArrayList<TimeModel> c) {
 		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
 		Random rd = new Random();
 		int n = a.size();
@@ -51,12 +52,9 @@ public class PushFact {
 				int randomS = rd.nextInt(n);
 				int randomO = rd.nextInt(n);
 				int randomT = rd.nextInt(n);
-				BaseDocument myObject = new BaseDocument();
-				myObject.setKey(String.valueOf(k) + "_1");
-				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
-				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
-				myObject.addAttribute("QuanHe", "gap_go");
-				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				Fact fact = new Fact(a.get(randomS).getNhanHienThi(), b.get(randomO).getNhanHienThi(), "gap_go",
+						c.get(randomT).getNhanHienThi());
+				BaseDocument myObject = this.createBaseDocumentFact(fact, k, "_1");
 				listdocs.add(myObject);
 				if (k % 500 == 0) {
 					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
@@ -70,7 +68,7 @@ public class PushFact {
 
 	}
 
-	public void to_chuc(ArrayList<Person> a, ArrayList<Event> b, ArrayList<Time> c) {
+	public void to_chuc(ArrayList<PersonModel> a, ArrayList<EventModel> b, ArrayList<TimeModel> c) {
 		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
 		Random rd = new Random();
 		int n = a.size();
@@ -80,12 +78,9 @@ public class PushFact {
 				int randomS = rd.nextInt(n);
 				int randomO = rd.nextInt(n);
 				int randomT = rd.nextInt(n);
-				BaseDocument myObject = new BaseDocument();
-				myObject.setKey(String.valueOf(k) + "_2");
-				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
-				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
-				myObject.addAttribute("QuanHe", "to_chuc");
-				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				Fact fact = new Fact(a.get(randomS).getNhanHienThi(), b.get(randomO).getNhanHienThi(), "to_chuc",
+						c.get(randomT).getNhanHienThi());
+				BaseDocument myObject = this.createBaseDocumentFact(fact, k, "_2");
 				listdocs.add(myObject);
 				if (k % 500 == 0) {
 					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
@@ -98,7 +93,7 @@ public class PushFact {
 		}
 	}
 
-	public void ky_thoa_thuan(ArrayList<Country> a, ArrayList<Country> b, ArrayList<Time> c) {
+	public void ky_thoa_thuan(ArrayList<CountryModel> a, ArrayList<CountryModel> b, ArrayList<TimeModel> c) {
 		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
 		Random rd = new Random();
 		int n = a.size();
@@ -108,12 +103,9 @@ public class PushFact {
 				int randomS = rd.nextInt(n);
 				int randomO = rd.nextInt(n);
 				int randomT = rd.nextInt(n);
-				BaseDocument myObject = new BaseDocument();
-				myObject.setKey(String.valueOf(k) + "_3");
-				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
-				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
-				myObject.addAttribute("QuanHe", "ky_thoa_thuan");
-				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				Fact fact = new Fact(a.get(randomS).getNhanHienThi(), b.get(randomO).getNhanHienThi(), "ky_thoa_thuan",
+						c.get(randomT).getNhanHienThi());
+				BaseDocument myObject = this.createBaseDocumentFact(fact, k, "_3");
 				listdocs.add(myObject);
 				if (k % 500 == 0) {
 					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
@@ -126,7 +118,7 @@ public class PushFact {
 		}
 	}
 
-	public void tham_gia(ArrayList<Person> a, ArrayList<Organization> b, ArrayList<Time> c) {
+	public void tham_gia(ArrayList<PersonModel> a, ArrayList<OrganizationModel> b, ArrayList<TimeModel> c) {
 		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
 		Random rd = new Random();
 		int n = a.size();
@@ -136,12 +128,9 @@ public class PushFact {
 				int randomS = rd.nextInt(n);
 				int randomO = rd.nextInt(n);
 				int randomT = rd.nextInt(n);
-				BaseDocument myObject = new BaseDocument();
-				myObject.setKey(String.valueOf(k) + "_4");
-				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
-				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
-				myObject.addAttribute("QuanHe", "tham_gia");
-				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				Fact fact = new Fact(a.get(randomS).getNhanHienThi(), b.get(randomO).getNhanHienThi(), "tham_gia",
+						c.get(randomT).getNhanHienThi());
+				BaseDocument myObject = this.createBaseDocumentFact(fact, k, "_4");
 				listdocs.add(myObject);
 				if (k % 500 == 0) {
 					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
@@ -154,7 +143,7 @@ public class PushFact {
 		}
 	}
 
-	public void dien_ra_tai(ArrayList<Event> a, ArrayList<Location> b, ArrayList<Time> c) {
+	public void dien_ra_tai(ArrayList<EventModel> a, ArrayList<LocationModel> b, ArrayList<TimeModel> c) {
 		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
 		Random rd = new Random();
 		int n = a.size();
@@ -164,12 +153,9 @@ public class PushFact {
 				int randomS = rd.nextInt(n);
 				int randomO = rd.nextInt(n);
 				int randomT = rd.nextInt(n);
-				BaseDocument myObject = new BaseDocument();
-				myObject.setKey(String.valueOf(k) + "_5");
-				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
-				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
-				myObject.addAttribute("QuanHe", "dien_ra_tai");
-				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				Fact fact = new Fact(a.get(randomS).getNhanHienThi(), b.get(randomO).getNhanHienThi(), "dien_ra_tai",
+						c.get(randomT).getNhanHienThi());
+				BaseDocument myObject = this.createBaseDocumentFact(fact, k, "_5");
 				listdocs.add(myObject);
 				if (k % 500 == 0) {
 					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
@@ -182,7 +168,7 @@ public class PushFact {
 		}
 	}
 
-	public void ung_ho(ArrayList<Person> a, ArrayList<Aggrement> b, ArrayList<Time> c) {
+	public void ung_ho(ArrayList<PersonModel> a, ArrayList<AggrementModel> b, ArrayList<TimeModel> c) {
 		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
 		Random rd = new Random();
 		int n = a.size();
@@ -192,12 +178,9 @@ public class PushFact {
 				int randomS = rd.nextInt(n);
 				int randomO = rd.nextInt(n);
 				int randomT = rd.nextInt(n);
-				BaseDocument myObject = new BaseDocument();
-				myObject.setKey(String.valueOf(k) + "_6");
-				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
-				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
-				myObject.addAttribute("QuanHe", "ung_ho");
-				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				Fact fact = new Fact(a.get(randomS).getNhanHienThi(), b.get(randomO).getNhanHienThi(), "ung_ho",
+						c.get(randomT).getNhanHienThi());
+				BaseDocument myObject = this.createBaseDocumentFact(fact, k, "_6");
 				listdocs.add(myObject);
 				if (k % 500 == 0) {
 					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
@@ -210,7 +193,7 @@ public class PushFact {
 		}
 	}
 
-	public void phan_doi(ArrayList<Person> a, ArrayList<Aggrement> b, ArrayList<Time> c) {
+	public void phan_doi(ArrayList<PersonModel> a, ArrayList<AggrementModel> b, ArrayList<TimeModel> c) {
 		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
 		Random rd = new Random();
 		int n = a.size();
@@ -220,12 +203,9 @@ public class PushFact {
 				int randomS = rd.nextInt(n);
 				int randomO = rd.nextInt(n);
 				int randomT = rd.nextInt(n);
-				BaseDocument myObject = new BaseDocument();
-				myObject.setKey(String.valueOf(k) + "_7");
-				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
-				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
-				myObject.addAttribute("QuanHe", "phan_doi");
-				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				Fact fact = new Fact(a.get(randomS).getNhanHienThi(), b.get(randomO).getNhanHienThi(), "phan_doi",
+						c.get(randomT).getNhanHienThi());
+				BaseDocument myObject = this.createBaseDocumentFact(fact, k, "_7");
 				listdocs.add(myObject);
 				if (k % 500 == 0) {
 					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
@@ -238,7 +218,7 @@ public class PushFact {
 		}
 	}
 
-	public void phat_bieu_tai(ArrayList<Person> a, ArrayList<Person> b, ArrayList<Time> c) {
+	public void phat_bieu_tai(ArrayList<PersonModel> a, ArrayList<PersonModel> b, ArrayList<TimeModel> c) {
 		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
 		Random rd = new Random();
 		int n = a.size();
@@ -248,12 +228,9 @@ public class PushFact {
 				int randomS = rd.nextInt(n);
 				int randomO = rd.nextInt(n);
 				int randomT = rd.nextInt(n);
-				BaseDocument myObject = new BaseDocument();
-				myObject.setKey(String.valueOf(k) + "_8");
-				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
-				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
-				myObject.addAttribute("QuanHe", "phat_bieu_tai");
-				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				Fact fact = new Fact(a.get(randomS).getNhanHienThi(), b.get(randomO).getNhanHienThi(), "phat_bieu_tai",
+						c.get(randomT).getNhanHienThi());
+				BaseDocument myObject = this.createBaseDocumentFact(fact, k, "_8");
 				listdocs.add(myObject);
 				if (k % 500 == 0) {
 					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
@@ -266,7 +243,7 @@ public class PushFact {
 		}
 	}
 
-	public void cang_thang_voi(ArrayList<Person> a, ArrayList<Person> b, ArrayList<Time> c) {
+	public void cang_thang_voi(ArrayList<PersonModel> a, ArrayList<PersonModel> b, ArrayList<TimeModel> c) {
 		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
 		Random rd = new Random();
 		int n = a.size();
@@ -276,12 +253,9 @@ public class PushFact {
 				int randomS = rd.nextInt(n);
 				int randomO = rd.nextInt(n);
 				int randomT = rd.nextInt(n);
-				BaseDocument myObject = new BaseDocument();
-				myObject.setKey(String.valueOf(k) + "_9");
-				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
-				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
-				myObject.addAttribute("QuanHe", "cang_thang_voi");
-				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				Fact fact = new Fact(a.get(randomS).getNhanHienThi(), b.get(randomO).getNhanHienThi(), "cang_thang_voi",
+						c.get(randomT).getNhanHienThi());
+				BaseDocument myObject = this.createBaseDocumentFact(fact, k, "_9");
 				listdocs.add(myObject);
 				if (k % 500 == 0) {
 					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
@@ -294,7 +268,7 @@ public class PushFact {
 		}
 	}
 
-	public void huy_bo(ArrayList<Person> a, ArrayList<Person> b, ArrayList<Time> c) {
+	public void huy_bo(ArrayList<PersonModel> a, ArrayList<PersonModel> b, ArrayList<TimeModel> c) {
 		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
 		Random rd = new Random();
 		int n = a.size();
@@ -304,12 +278,9 @@ public class PushFact {
 				int randomS = rd.nextInt(n);
 				int randomO = rd.nextInt(n);
 				int randomT = rd.nextInt(n);
-				BaseDocument myObject = new BaseDocument();
-				myObject.setKey(String.valueOf(k) + "_10");
-				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
-				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
-				myObject.addAttribute("QuanHe", "huy_bo");
-				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				Fact fact = new Fact(a.get(randomS).getNhanHienThi(), b.get(randomO).getNhanHienThi(), "huy_bo",
+						c.get(randomT).getNhanHienThi());
+				BaseDocument myObject = this.createBaseDocumentFact(fact, k, "_10");
 				listdocs.add(myObject);
 				if (k % 500 == 0) {
 					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
@@ -322,7 +293,7 @@ public class PushFact {
 		}
 	}
 
-	public void dam_phan_voi(ArrayList<Person> a, ArrayList<Person> b, ArrayList<Time> c) {
+	public void dam_phan_voi(ArrayList<PersonModel> a, ArrayList<PersonModel> b, ArrayList<TimeModel> c) {
 		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
 		Random rd = new Random();
 		int n = a.size();
@@ -332,12 +303,9 @@ public class PushFact {
 				int randomS = rd.nextInt(n);
 				int randomO = rd.nextInt(n);
 				int randomT = rd.nextInt(n);
-				BaseDocument myObject = new BaseDocument();
-				myObject.setKey(String.valueOf(k) + "_11");
-				myObject.addAttribute("Subject", a.get(randomS).getNhanHienThi());
-				myObject.addAttribute("Object", b.get(randomO).getNhanHienThi());
-				myObject.addAttribute("QuanHe", "dam_phan_voi");
-				myObject.addAttribute("Time", c.get(randomT).getNhanHienThi());
+				Fact fact = new Fact(a.get(randomS).getNhanHienThi(), b.get(randomO).getNhanHienThi(), "dam_phan_voi",
+						c.get(randomT).getNhanHienThi());
+				BaseDocument myObject = this.createBaseDocumentFact(fact, k, "_11");
 				listdocs.add(myObject);
 				if (k % 500 == 0) {
 					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
@@ -348,6 +316,16 @@ public class PushFact {
 		} catch (ArangoDBException e) {
 			System.err.println("Failed to import Fact: " + e.getMessage());
 		}
+	}
+
+	public BaseDocument createBaseDocumentFact(Fact fact, int k, String type) {
+		BaseDocument myObject = new BaseDocument();
+		myObject.setKey(String.valueOf(k) + type);
+		myObject.addAttribute("Subject", fact.getSubject());
+		myObject.addAttribute("Object", fact.getObject());
+		myObject.addAttribute("QuanHe", fact.getRelationShip());
+		myObject.addAttribute("Time", fact.getTime());
+		return myObject;
 	}
 
 	public String getCollectionName() {

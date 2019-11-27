@@ -1,22 +1,19 @@
 package oop.pushDataInDB;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.BaseDocument;
 
-import oop.beans.Location;
 import oop.connectDB.ConnectArangoDB;
+import oop.model.LocationModel;
 
 
 public class PushLocations implements PushData{
-	private ArrayList<Location> locations;
+	private ArrayList<LocationModel> locations;
 
-	public PushLocations(ArrayList<Location> locations) {
+	public PushLocations(ArrayList<LocationModel> locations) {
 		this.locations = locations;
 	}
 

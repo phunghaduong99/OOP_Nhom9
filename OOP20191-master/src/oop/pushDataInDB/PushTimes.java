@@ -1,23 +1,18 @@
 package oop.pushDataInDB;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
-
 import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.BaseDocument;
-
-import oop.beans.Time;
 import oop.connectDB.ConnectArangoDB;
+import oop.model.TimeModel;
 
 
 public class PushTimes implements PushData{
-	private ArrayList<Time> times;
+	private ArrayList<TimeModel> times;
 
 
-	public PushTimes(ArrayList<Time> times) {
+	public PushTimes(ArrayList<TimeModel> times) {
 		this.times = times;
 	}
 

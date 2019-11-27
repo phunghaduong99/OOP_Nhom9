@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.BaseDocument;
-import oop.beans.Event;
-import oop.connectDB.ConnectArangoDB;
-public class PushEvents implements PushData{
-	private ArrayList<Event> events;
 
-	public PushEvents(ArrayList<Event> events) {
+import oop.connectDB.ConnectArangoDB;
+import oop.model.EventModel;
+public class PushEvents implements PushData{
+	private ArrayList<EventModel> events;
+
+	public PushEvents(ArrayList<EventModel> events) {
 		this.events = events;
 	}
 

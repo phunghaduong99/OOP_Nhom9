@@ -1,24 +1,20 @@
 package oop.pushDataInDB;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.sql.Connection;
-
 import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.BaseDocument;
 
-import oop.beans.Aggrement;
 import oop.connectDB.ConnectArangoDB;
+import oop.model.AggrementModel;
 
 
 
 //INSERT document INTO collection [ OPTIONS options ]
 public class PushAggrement implements PushData{
 
-	private ArrayList<Aggrement> aggrements;
-	public PushAggrement(ArrayList<Aggrement> aggrements) {
+	private ArrayList<AggrementModel> aggrements;
+	public PushAggrement(ArrayList<AggrementModel> aggrements) {
 		this.aggrements = aggrements;
 	}
 	@Override

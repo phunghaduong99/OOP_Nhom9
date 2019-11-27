@@ -6,14 +6,14 @@ import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.BaseDocument;
 
-import oop.beans.Country;
 import oop.connectDB.ConnectArangoDB;
+import oop.model.CountryModel;
 
 
 public class PushCountries implements PushData{
-	private ArrayList<Country> countrys;
+	private ArrayList<CountryModel> countrys;
 
-	public PushCountries(ArrayList<Country> countrys) {
+	public PushCountries(ArrayList<CountryModel> countrys) {
 		// TODO Auto-generated constructor stub
 		this.countrys = countrys;
 	}

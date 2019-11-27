@@ -1,17 +1,13 @@
 package oop.generatedata;
 
-
-
 import java.util.ArrayList;
-import java.util.List;
-
-import oop.beans.Location;
-import oop.beans.Event;
-import oop.beans.Time;
-import oop.beans.Aggrement;
-import oop.beans.Country;
-import oop.beans.Organization;
-import oop.beans.Person;
+import oop.model.AggrementModel;
+import oop.model.CountryModel;
+import oop.model.EventModel;
+import oop.model.LocationModel;
+import oop.model.OrganizationModel;
+import oop.model.PersonModel;
+import oop.model.TimeModel;
 
 public class GetData {
 	private int n;
@@ -21,46 +17,46 @@ public class GetData {
 		this.n = n;
 	}
 		
-	public ArrayList<Aggrement> getAggrements () {
-		generateData = new GenerateAggrement();
-		ArrayList<Aggrement> aggrements = (ArrayList<Aggrement>) generateData.getData(n);
+	public ArrayList<AggrementModel> getAggrements () {
+		generateData = new GenerateAggrements();
+		ArrayList<AggrementModel> aggrements = (ArrayList<AggrementModel>) generateData.getData(n);
 		return aggrements;
 	}
 	
-	public ArrayList<Country> getCountries() {
+	public ArrayList<CountryModel> getCountries() {
 		generateData = new GenerateCountries();
-		ArrayList<Country> countries = (ArrayList<Country>) generateData.getData(n);
+		ArrayList<CountryModel> countries = (ArrayList<CountryModel>) generateData.getData(n);
 		return countries;
 	}
 	
-	public ArrayList<Event> getEvents() {
+	public ArrayList<EventModel> getEvents() {
 		generateData = new GenerateEvents();
 		@SuppressWarnings("unchecked")
-		ArrayList<Event> events = (ArrayList<Event>) generateData.getData(n);
+		ArrayList<EventModel> events = (ArrayList<EventModel>) generateData.getData(n);
 		return events;
 	}
 	
-	public ArrayList<Location> getLocations() {
+	public ArrayList<LocationModel> getLocations() {
 		generateData = new GenerateLocations();
-		ArrayList<Location> locations = (ArrayList<Location>) generateData.getData(n);
+		ArrayList<LocationModel> locations = (ArrayList<LocationModel>) generateData.getData(n);
 		return locations;
 	}
 	
-	public ArrayList<Organization> getOrganizations() {
+	public ArrayList<OrganizationModel> getOrganizations() {
 		generateData = new GenerateOrganizations();
-		ArrayList<Organization> organizations = (ArrayList<Organization>) generateData.getData(n);
+		ArrayList<OrganizationModel> organizations = (ArrayList<OrganizationModel>) generateData.getData(n);
 		return organizations;
 	}
 	
-	public ArrayList<Person> getPersons() {
+	public ArrayList<PersonModel> getPersons() {
 		generateData = new GeneratePersons();
-		ArrayList<Person> persons = (ArrayList<Person>) generateData.getData(n);
+		ArrayList<PersonModel> persons = (ArrayList<PersonModel>) generateData.getData(n);
 		return persons;
 	}
 	
-	public ArrayList<Time> getTimes() {
+	public ArrayList<TimeModel> getTimes() {
 		generateData = new GenerateTimes();
-		ArrayList<Time> times = (ArrayList<Time>) generateData.getData(n);
+		ArrayList<TimeModel> times = (ArrayList<TimeModel>) generateData.getData(n);
 		return times;
 	}
 }

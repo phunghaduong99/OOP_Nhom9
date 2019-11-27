@@ -6,13 +6,13 @@ import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.BaseDocument;
 
-import oop.beans.Organization;
 import oop.connectDB.ConnectArangoDB;
+import oop.model.OrganizationModel;
 
 public class PushOrganizations implements PushData {
-	private ArrayList<Organization> organizations;
+	private ArrayList<OrganizationModel> organizations;
 
-	public PushOrganizations(ArrayList<Organization> organizations) {
+	public PushOrganizations(ArrayList<OrganizationModel> organizations) {
 		this.organizations = organizations;
 	}
 
