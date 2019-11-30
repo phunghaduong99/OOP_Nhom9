@@ -5,7 +5,7 @@ import java.util.List;
 
 import oop.model.LocationModel;
 
-public class GenerateLocations implements GenerateData {
+public class GenerateLocations extends GenerateDataImpl {
 	@Override
 	public List<LocationModel> getData(int n) {
 

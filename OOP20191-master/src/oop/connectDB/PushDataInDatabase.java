@@ -1,6 +1,7 @@
-package oop.connectDB;
+package oop.connectdb;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import oop.fact.Fact;
 import oop.fact.PushFact;
@@ -16,15 +17,15 @@ import oop.model.LocationModel;
 import oop.model.OrganizationModel;
 import oop.model.PersonModel;
 import oop.model.TimeModel;
-import oop.pushDataInDB.Collection;
-import oop.pushDataInDB.PushAggrement;
-import oop.pushDataInDB.PushCountries;
-import oop.pushDataInDB.PushData;
-import oop.pushDataInDB.PushEvents;
-import oop.pushDataInDB.PushLocations;
-import oop.pushDataInDB.PushOrganizations;
-import oop.pushDataInDB.PushPersons;
-import oop.pushDataInDB.PushTimes;
+import oop.pushdataindb.Collection;
+import oop.pushdataindb.IPushData;
+import oop.pushdataindb.PushAggrement;
+import oop.pushdataindb.PushCountries;
+import oop.pushdataindb.PushEvents;
+import oop.pushdataindb.PushLocations;
+import oop.pushdataindb.PushOrganizations;
+import oop.pushdataindb.PushPersons;
+import oop.pushdataindb.PushTimes;
 
 
 
@@ -41,7 +42,11 @@ public class PushDataInDatabase {
 		GetData getData = new GetData(n);
 		ArrayList<OrganizationModel> organizations = getData.getOrganizations();
 		ArrayList<TimeModel> times = getData.getTimes();
+		List<String> time = getData.getListLabel();
+		System.out.println("time"+time.size());
 		ArrayList<CountryModel> countrys = getData.getCountries();
+		List<String> countriese = getData.getListLabel();
+		System.out.println("cou "+ countriese.size());
 		ArrayList<EventModel> events = getData.getEvents();
 		ArrayList<PersonModel> persons = getData.getPersons();
 		ArrayList<LocationModel> locations = getData.getLocations();
@@ -49,7 +54,7 @@ public class PushDataInDatabase {
 		endread = System.currentTimeMillis();
 		System.out.println("read Data from file: " + (endread- startread));
 		
-		
+	
 		Collection coll = new Collection();
 		coll.deleteCollection("Organization");
 		coll.deleteCollection("Time");
@@ -69,7 +74,7 @@ public class PushDataInDatabase {
 		coll.createCollection("Agreement");
 		coll.createCollection("Fact");
 		
-		PushData pushData = new PushOrganizations(organizations);
+		IPushData pushData = new PushOrganizations(organizations);
 		
 		start = System.currentTimeMillis(); // start lấy thời gian theo millisecond
 		pushData.pushData(n, "Organization");
@@ -97,8 +102,12 @@ public class PushDataInDatabase {
 		
 		start = System.currentTimeMillis(); // start lấy thời gian theo millisecond
 		
+		System.out.println("test");
+		
 		PushFact fact = new PushFact("Fact", m);
-		fact.pushFactIntoDatabase(organizations, times, countrys, events, persons, locations, aggrements);
+		fact.pushFactInDb(countriese, countriese, time, "ky_thoa_thoa", "_4");
+		System.out.println("test");
+//		fact.pushFactIntoDatabase(organizations, times, countrys, events, persons, locations, aggrements);
 //		fact.gap_go(persons, persons, times);
 //		fact.to_chuc(persons, events, times);
 //		fact.ky_thoa_thuan(countrys, countrys, times);

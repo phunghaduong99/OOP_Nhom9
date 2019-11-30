@@ -5,7 +5,7 @@ import java.util.List;
 
 import oop.model.OrganizationModel;
 
-public class GenerateOrganizations implements GenerateData {
+public class GenerateOrganizations extends GenerateDataImpl {
 	@Override
 	public List<OrganizationModel> getData(int n) {
 

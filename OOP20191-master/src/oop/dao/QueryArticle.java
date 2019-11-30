@@ -7,7 +7,7 @@ import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.BaseDocument;
 import com.arangodb.util.MapBuilder;
 
-import oop.connectDB.ConnectArangoDB;
+import oop.connectdb.ConnectArangoDB;
 
 public class QueryArticle {
 	private ArangoDatabase database;

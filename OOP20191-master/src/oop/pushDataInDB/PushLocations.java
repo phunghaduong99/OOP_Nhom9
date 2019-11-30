@@ -1,4 +1,4 @@
-package oop.pushDataInDB;
+package oop.pushdataindb;
 
 import java.util.ArrayList;
 
@@ -6,11 +6,11 @@ import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.BaseDocument;
 
-import oop.connectDB.ConnectArangoDB;
+import oop.connectdb.ConnectArangoDB;
 import oop.model.LocationModel;
 
 
-public class PushLocations implements PushData{
+public class PushLocations implements IPushData{
 	private ArrayList<LocationModel> locations;
 
 	public PushLocations(ArrayList<LocationModel> locations) {

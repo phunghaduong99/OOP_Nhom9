@@ -2,6 +2,6 @@ package oop.generatedata;
 
 import java.util.List;
 
-public interface GenerateData {
+public interface IGenerateData {
 	List<?> getData(int n);
 }

@@ -1,17 +1,17 @@
-package oop.pushDataInDB;
+package oop.pushdataindb;
 
 import java.util.ArrayList;
 import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.BaseDocument;
 
-import oop.connectDB.ConnectArangoDB;
+import oop.connectdb.ConnectArangoDB;
 import oop.model.AggrementModel;
 
 
 
 //INSERT document INTO collection [ OPTIONS options ]
-public class PushAggrement implements PushData{
+public class PushAggrement implements IPushData{
 
 	private ArrayList<AggrementModel> aggrements;
 	public PushAggrement(ArrayList<AggrementModel> aggrements) {

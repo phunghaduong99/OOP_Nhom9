@@ -1,15 +1,16 @@
-package oop.pushDataInDB;
+package oop.pushdataindb;
 
 import java.util.ArrayList;
 import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.BaseDocument;
-import oop.connectDB.ConnectArangoDB;
+
+import oop.connectdb.ConnectArangoDB;
 import oop.model.PersonModel;
 
 
 
-public class PushPersons implements PushData{
+public class PushPersons implements IPushData{
 	private ArrayList<PersonModel> people;
 	public PushPersons(ArrayList<PersonModel> people) {
 		this.people = people;

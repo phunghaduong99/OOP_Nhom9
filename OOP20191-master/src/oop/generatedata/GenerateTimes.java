@@ -5,14 +5,13 @@ import java.util.List;
 
 import oop.model.TimeModel;
 
-public class GenerateTimes implements GenerateData {
-
+public class GenerateTimes extends GenerateDataImpl {
 	@Override
 	public List<TimeModel> getData(int n) {
-		
 		List<TimeModel> listTime = new ArrayList<TimeModel>();
 		ReadFile readFile = new ReadFile();
 		List<String> nhanHienThi = readFile.randomDataInFile("./data/time/Time_nhan.txt");
+		this.setNhanHienThi(nhanHienThi);
 		List<String> dinhDanh = readFile.randomDataInFile("./data/time/Time_dinhDanh.txt");
 		List<String> moTa = readFile.randomDataInFile("./data/time/Time_moTa.txt");
 		List<String> link = readFile.randomDataInFile("./data/time/Time_link.txt");
@@ -23,7 +22,6 @@ public class GenerateTimes implements GenerateData {
 			listTime.add(timee);
 
 		}
-
 		return listTime;
 	}
 

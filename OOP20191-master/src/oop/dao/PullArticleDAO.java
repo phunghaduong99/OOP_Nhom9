@@ -18,7 +18,7 @@ public static void main(String[] args) {
 	PropertyConfigurator.configure(prop);
 	PullArticleDAO dao=new PullArticleDAO();
 	
-	dao.thongtinNhanVat("7/8/2010",  "DinhDanh", "Agreement");
+	dao.thongtinNhanVat("4/8/2014",  "DinhDanh", "Agreement");
 	
 }
 	

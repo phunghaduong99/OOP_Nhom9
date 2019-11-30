@@ -5,7 +5,7 @@ import java.util.List;
 
 import oop.model.EventModel;
 
-public class GenerateEvents implements GenerateData {
+public class GenerateEvents extends GenerateDataImpl {
 	@Override
 	public List<EventModel> getData(int n) {
 		ArrayList<EventModel> lisEvents = new ArrayList<EventModel>();

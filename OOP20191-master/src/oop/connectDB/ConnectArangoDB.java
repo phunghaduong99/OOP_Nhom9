@@ -1,4 +1,4 @@
-package oop.connectDB;
+package oop.connectdb;
 
 import com.arangodb.ArangoDB;
 import com.arangodb.ArangoDBException;

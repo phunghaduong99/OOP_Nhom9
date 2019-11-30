@@ -1,11 +1,11 @@
-package oop.pushDataInDB;
+package oop.pushdataindb;
 
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.CollectionEntity;
 
-import oop.connectDB.ConnectArangoDB;
+import oop.connectdb.ConnectArangoDB;
 
 public class Collection {
 	public Collection() {

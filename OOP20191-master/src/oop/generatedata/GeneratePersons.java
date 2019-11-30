@@ -5,10 +5,9 @@ import java.util.List;
 
 import oop.model.PersonModel;
 
-public class GeneratePersons implements GenerateData {
+public class GeneratePersons extends GenerateDataImpl {
 	@Override
 	public List<PersonModel> getData(int n) {
-
 		List<PersonModel> listPerson = new ArrayList<PersonModel>();
 		ReadFile readFile = new ReadFile();
 		List<String> nhanHienThi = readFile.randomDataInFile("./data/person/Person_nhan.txt");

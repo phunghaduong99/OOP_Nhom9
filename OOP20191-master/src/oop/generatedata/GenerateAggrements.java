@@ -5,13 +5,13 @@ import java.util.List;
 
 import oop.model.AggrementModel;
 
-public class GenerateAggrements implements GenerateData {
-
-	@Override
+public class GenerateAggrements extends GenerateDataImpl {
+	@Override 
 	public List<AggrementModel> getData(int n) {
 		List<AggrementModel> listAggrement = new ArrayList<AggrementModel>();
 		ReadFile readFile = new ReadFile();
 		List<String> nhanHienThi = readFile.randomDataInFile("./data/agreement/Aggrement_nhan.txt");
+		this.setNhanHienThi(nhanHienThi);
 		List<String> dinhDanh = readFile.randomDataInFile("./data/agreement/Aggrement_dinhdanh.txt");
 		List<String> moTa = readFile.randomDataInFile("./data/agreement/Aggrement_mota.txt");
 		List<String> link = readFile.randomDataInFile("./data/agreement/Aggrement_mota.txt");

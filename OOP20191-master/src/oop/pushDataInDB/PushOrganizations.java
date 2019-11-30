@@ -1,4 +1,4 @@
-package oop.pushDataInDB;
+package oop.pushdataindb;
 
 import java.util.ArrayList;
 
@@ -6,10 +6,10 @@ import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.BaseDocument;
 
-import oop.connectDB.ConnectArangoDB;
+import oop.connectdb.ConnectArangoDB;
 import oop.model.OrganizationModel;
 
-public class PushOrganizations implements PushData {
+public class PushOrganizations implements IPushData {
 	private ArrayList<OrganizationModel> organizations;
 
 	public PushOrganizations(ArrayList<OrganizationModel> organizations) {
