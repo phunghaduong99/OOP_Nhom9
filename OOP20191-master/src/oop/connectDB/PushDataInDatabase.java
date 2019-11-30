@@ -105,7 +105,7 @@ public class PushDataInDatabase {
 		System.out.println("test");
 		
 		PushFact fact = new PushFact("Fact", m);
-		fact.pushFactInDb(countriese, countriese, time, "ky_thoa_thoa", "_4");
+		fact.pushFactInDb(countriese, countriese, time, "ky_thoa_thuan", "_4");
 		System.out.println("test");
 //		fact.pushFactIntoDatabase(organizations, times, countrys, events, persons, locations, aggrements);
 //		fact.gap_go(persons, persons, times);

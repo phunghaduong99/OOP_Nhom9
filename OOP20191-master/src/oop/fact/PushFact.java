@@ -21,7 +21,7 @@ public class PushFact {
 		this.m = m;
 	}
 
-	public void pushFactInDb(List<String> a, List<String> b, List<String> c, String relation, String loai) {
+	public void pushFactInDb(List<String> a, List<String> b, List<String> c, String relation, String type) {
 		ArangoDatabase arangoDatabase = ConnectArangoDB.getConnection();
 		Random rd = new Random();
 		int a_size = a.size();
@@ -35,7 +35,7 @@ public class PushFact {
 				int randomT = rd.nextInt(c_size);
 				Fact fact = new Fact(a.get(randomS), b.get(randomO), relation,
 						c.get(randomT));
-				BaseDocument myObject = this.createBaseDocumentFact(fact, k, loai);
+				BaseDocument myObject = this.createBaseDocumentFact(fact, k, type);
 				listdocs.add(myObject);
 				if (k % 500 == 0) {
 					arangoDatabase.collection(collectionName).insertDocuments(listdocs);
