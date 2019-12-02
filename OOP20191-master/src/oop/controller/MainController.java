@@ -24,7 +24,7 @@ public class MainController {
 
 		start = System.currentTimeMillis(); // start lấy thời gian theo millisecond
 
-		PushDataInDatabase.save((int)(1000000/7), (int)(2000000/11));
+		PushDataInDatabase.save((int)(10000/7), (int)(10000/11));
 
 		end = System.currentTimeMillis(); // start lấy thời gian theo millisecond
 
