@@ -98,10 +98,10 @@ public class PushDataInDatabase {
 		fact.pushFactInDb(eventLabel, countryLabel, timeLabel, "dien_ra_tai", "_5");
 		fact.pushFactInDb(personLabel, aggrementLabel, timeLabel, "ung_ho", "_6");
 		fact.pushFactInDb(personLabel, aggrementLabel, timeLabel, "phan_doi", "_7");
-		fact.pushFactInDb(personLabel, personLabel, timeLabel, "phat_bieu_tai", "_8");
-		fact.pushFactInDb(personLabel, personLabel, timeLabel, "cang_thang_voi", "_9");
-		fact.pushFactInDb(personLabel, personLabel, timeLabel, "huy_bo", "_10");
-		fact.pushFactInDb(personLabel, personLabel, timeLabel, "dam_phan_voi", "_11");
+		fact.pushFactInDb(personLabel, eventLabel, timeLabel, "phat_bieu_tai", "_8");
+		fact.pushFactInDb(countryLabel, countryLabel, timeLabel, "cang_thang_voi", "_9");
+		fact.pushFactInDb(personLabel, eventLabel, timeLabel, "huy_bo", "_10");
+		fact.pushFactInDb(countryLabel, countryLabel, timeLabel, "dam_phan_voi", "_11");
 		end = System.currentTimeMillis(); // start lấy thời gian theo millisecond
 		System.out.println("push Fact into Database: " + (end- start));
 		
