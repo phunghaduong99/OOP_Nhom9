@@ -7,11 +7,7 @@ import com.arangodb.Protocol;
 
 public class ConnectArangoDB {
 	private static String databaseName = "OOP_NHOM9";
-
-	
 	public static ArangoDatabase getConnection() {
-
-		
 		ArangoDatabase database = null;
 		ArangoDB conn = new ArangoDB.Builder().timeout(100).host("127.0.0.1",8529).user("root").password("phunghaduong").useProtocol(Protocol.VST).build();
 		try {
@@ -19,7 +15,6 @@ public class ConnectArangoDB {
 		} catch (ArangoDBException e) {
 			System.out.println("Connect database fail!");
 		}
-
 		return database;
 	}
 	

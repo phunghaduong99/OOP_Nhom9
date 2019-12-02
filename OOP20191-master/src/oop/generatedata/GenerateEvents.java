@@ -11,6 +11,7 @@ public class GenerateEvents extends GenerateDataImpl {
 		ArrayList<EventModel> lisEvents = new ArrayList<EventModel>();
 		ReadFile readFile = new ReadFile();
 		List<String> nhanHienThi = readFile.randomDataInFile("./data/event/Event_nhan.txt");
+		this.setNhanHienThi(nhanHienThi);
 		List<String> moTa = readFile.randomDataInFile("./data/event/Event_moTa.txt");
 		List<String> link = readFile.randomDataInFile("./data/event/Event_link.txt");
 		List<String> time = readFile.randomDataInFile("./data/event/Event_time.txt");

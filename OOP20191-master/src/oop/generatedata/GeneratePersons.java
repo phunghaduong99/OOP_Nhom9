@@ -11,6 +11,7 @@ public class GeneratePersons extends GenerateDataImpl {
 		List<PersonModel> listPerson = new ArrayList<PersonModel>();
 		ReadFile readFile = new ReadFile();
 		List<String> nhanHienThi = readFile.randomDataInFile("./data/person/Person_nhan.txt");
+		this.setNhanHienThi(nhanHienThi);
 		List<String> moTa = readFile.randomDataInFile("./data/person/Person_moTa.txt");
 		List<String> link = readFile.randomDataInFile("./data/person/Person_link.txt");
 		List<String> chucVu = readFile.randomDataInFile("./data/person/Person_chucVu.txt");

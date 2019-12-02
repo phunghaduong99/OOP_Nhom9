@@ -6,7 +6,7 @@ import org.apache.log4j.PropertyConfigurator;
 import com.arangodb.ArangoDatabase;
 
 import oop.connectdb.ConnectArangoDB;
-import oop.connectdb.PushDataInDatabase;
+import oop.pushdataindb.PushDataInDatabase;
 
 public class MainController {
 	public static void main(String[] args) {
@@ -24,7 +24,7 @@ public class MainController {
 
 		start = System.currentTimeMillis(); // start lấy thời gian theo millisecond
 
-		PushDataInDatabase.save((int)(10000), (int)(20000));
+		PushDataInDatabase.save((int)(1000000/7), (int)(2000000/11));
 
 		end = System.currentTimeMillis(); // start lấy thời gian theo millisecond
 

@@ -30,6 +30,7 @@ public class GetData {
 	public ArrayList<AggrementModel> getAggrements () {
 		generateData = new GenerateAggrements();
 		ArrayList<AggrementModel> aggrements = (ArrayList<AggrementModel>) generateData.getData(n);
+		this.setListLabel(generateData.getNhanHienThi());
 		return aggrements;
 	}
 	
@@ -44,24 +45,28 @@ public class GetData {
 		generateData = new GenerateEvents();
 		@SuppressWarnings("unchecked")
 		ArrayList<EventModel> events = (ArrayList<EventModel>) generateData.getData(n);
+		this.setListLabel(generateData.getNhanHienThi());
 		return events;
 	}
 	
 	public ArrayList<LocationModel> getLocations() {
 		generateData = new GenerateLocations();
 		ArrayList<LocationModel> locations = (ArrayList<LocationModel>) generateData.getData(n);
+		this.setListLabel(generateData.getNhanHienThi());
 		return locations;
 	}
 	
 	public ArrayList<OrganizationModel> getOrganizations() {
 		generateData = new GenerateOrganizations();
 		ArrayList<OrganizationModel> organizations = (ArrayList<OrganizationModel>) generateData.getData(n);
+		this.setListLabel(generateData.getNhanHienThi());
 		return organizations;
 	}
 	
 	public ArrayList<PersonModel> getPersons() {
 		generateData = new GeneratePersons();
 		ArrayList<PersonModel> persons = (ArrayList<PersonModel>) generateData.getData(n);
+		this.setListLabel(generateData.getNhanHienThi());
 		return persons;
 	}
 	

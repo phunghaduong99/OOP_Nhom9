@@ -12,6 +12,7 @@ public class GenerateLocations extends GenerateDataImpl {
 		ArrayList<LocationModel> listLocation = new ArrayList<LocationModel>();
 		ReadFile readFile = new ReadFile();
 		List<String> nhanHienThi = readFile.randomDataInFile("./data/location/Location_nhan.txt");
+		this.setNhanHienThi(nhanHienThi);
 		List<String> moTa = readFile.randomDataInFile("./data/location/Location_moTa.txt");
 		List<String> link = readFile.randomDataInFile("./data/location/Location_link.txt");
 		List<String> country = readFile.randomDataInFile("./data/location/location_country.txt");

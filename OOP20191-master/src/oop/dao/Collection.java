@@ -1,4 +1,4 @@
-package oop.pushdataindb;
+package oop.dao;
 
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDBException;

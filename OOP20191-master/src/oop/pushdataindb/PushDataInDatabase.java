@@ -1,31 +1,17 @@
-package oop.connectdb;
+package oop.pushdataindb;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import oop.fact.Fact;
-import oop.fact.PushFact;
-import oop.generatedata.GenerateCountries;
-import oop.generatedata.GenerateEvents;
-import oop.generatedata.GeneratePersons;
+import oop.dao.Collection;
 import oop.generatedata.GetData;
 import oop.model.AggrementModel;
 import oop.model.CountryModel;
-import oop.model.EntityModel;
 import oop.model.EventModel;
 import oop.model.LocationModel;
 import oop.model.OrganizationModel;
 import oop.model.PersonModel;
 import oop.model.TimeModel;
-import oop.pushdataindb.Collection;
-import oop.pushdataindb.IPushData;
-import oop.pushdataindb.PushAggrement;
-import oop.pushdataindb.PushCountries;
-import oop.pushdataindb.PushEvents;
-import oop.pushdataindb.PushLocations;
-import oop.pushdataindb.PushOrganizations;
-import oop.pushdataindb.PushPersons;
-import oop.pushdataindb.PushTimes;
 
 
 
@@ -41,16 +27,19 @@ public class PushDataInDatabase {
 		startread = System.currentTimeMillis(); // start lấy thời gian theo millisecond
 		GetData getData = new GetData(n);
 		ArrayList<OrganizationModel> organizations = getData.getOrganizations();
+		List<String> organizationLabel = getData.getListLabel();
 		ArrayList<TimeModel> times = getData.getTimes();
-		List<String> time = getData.getListLabel();
-		System.out.println("time"+time.size());
+		List<String> timeLabel = getData.getListLabel();
 		ArrayList<CountryModel> countrys = getData.getCountries();
-		List<String> countriese = getData.getListLabel();
-		System.out.println("cou "+ countriese.size());
+		List<String> countryLabel = getData.getListLabel();
 		ArrayList<EventModel> events = getData.getEvents();
+		List<String> eventLabel = getData.getListLabel();
 		ArrayList<PersonModel> persons = getData.getPersons();
+		List<String> personLabel = getData.getListLabel();
 		ArrayList<LocationModel> locations = getData.getLocations();
+		List<String> locationLabel = getData.getListLabel();
 		ArrayList<AggrementModel> aggrements = getData.getAggrements();
+		List<String> aggrementLabel = getData.getListLabel();
 		endread = System.currentTimeMillis();
 		System.out.println("read Data from file: " + (endread- startread));
 		
@@ -98,29 +87,22 @@ public class PushDataInDatabase {
 		pushData.pushData(n, "Agreement");
 		
 		end = System.currentTimeMillis(); // start lấy thời gian theo millisecond
-		System.out.println("push Data into Database: " + (end- start));
+		System.out.println("push Entity into Database: " + (end- start));
 		
 		start = System.currentTimeMillis(); // start lấy thời gian theo millisecond
-		
-		System.out.println("test");
-		
 		PushFact fact = new PushFact("Fact", m);
-		fact.pushFactInDb(countriese, countriese, time, "ky_thoa_thuan", "_4");
-		System.out.println("test");
-//		fact.pushFactIntoDatabase(organizations, times, countrys, events, persons, locations, aggrements);
-//		fact.gap_go(persons, persons, times);
-//		fact.to_chuc(persons, events, times);
-//		fact.ky_thoa_thuan(countrys, countrys, times);
-//		fact.tham_gia(persons, organizations, times);
-//		fact.dien_ra_tai(events, locations, times);
-//		fact.ung_ho(persons, aggrements, times);
-//		fact.phan_doi(persons, aggrements, times);
-//		fact.phat_bieu_tai(persons, persons, times);
-//		fact.cang_thang_voi(persons, persons, times);
-//		fact.huy_bo(persons, persons, times);
-//		fact.dam_phan_voi(persons, persons, times);
+		fact.pushFactInDb(personLabel, personLabel, timeLabel, "gap_go", "_1");
+		fact.pushFactInDb(personLabel, eventLabel, timeLabel, "to_chuc", "_2");
+		fact.pushFactInDb(countryLabel, countryLabel, timeLabel, "ky_thoa_thuan", "_3");
+		fact.pushFactInDb(personLabel, organizationLabel, timeLabel, "tham_gia", "_4");
+		fact.pushFactInDb(eventLabel, countryLabel, timeLabel, "dien_ra_tai", "_5");
+		fact.pushFactInDb(personLabel, aggrementLabel, timeLabel, "ung_ho", "_6");
+		fact.pushFactInDb(personLabel, aggrementLabel, timeLabel, "phan_doi", "_7");
+		fact.pushFactInDb(personLabel, personLabel, timeLabel, "phat_bieu_tai", "_8");
+		fact.pushFactInDb(personLabel, personLabel, timeLabel, "cang_thang_voi", "_9");
+		fact.pushFactInDb(personLabel, personLabel, timeLabel, "huy_bo", "_10");
+		fact.pushFactInDb(personLabel, personLabel, timeLabel, "dam_phan_voi", "_11");
 		end = System.currentTimeMillis(); // start lấy thời gian theo millisecond
-	
 		System.out.println("push Fact into Database: " + (end- start));
 		
 		

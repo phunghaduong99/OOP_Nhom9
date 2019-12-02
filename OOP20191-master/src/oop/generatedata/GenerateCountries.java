@@ -7,7 +7,7 @@ import oop.model.CountryModel;
 
 public class GenerateCountries extends GenerateDataImpl {
 	@Override
-	public List<?> getData(int n) {
+	public List<CountryModel> getData(int n) {
 		List<CountryModel> listCountries = new ArrayList<CountryModel>();
 		ReadFile readFile = new ReadFile();
 		List<String> nhanHienThi = readFile.randomDataInFile("./data/country/Country_nhan.txt");

@@ -1,11 +1,11 @@
 eclipse.preferences.version=1
-encoding//src/oop/connectdb/PushDataInDatabase.java=UTF-8
 encoding//src/oop/controller/MainController.java=UTF-8
-encoding//src/oop/fact/PushFact.java=UTF-8
 encoding//src/oop/generatedata/ReadFile.java=UTF-8
 encoding//src/oop/pushdataindb/PushAggrement.java=UTF-8
 encoding//src/oop/pushdataindb/PushCountries.java=UTF-8
+encoding//src/oop/pushdataindb/PushDataInDatabase.java=UTF-8
 encoding//src/oop/pushdataindb/PushEvents.java=UTF-8
+encoding//src/oop/pushdataindb/PushFact.java=UTF-8
 encoding//src/oop/pushdataindb/PushLocations.java=UTF-8
 encoding//src/oop/pushdataindb/PushOrganizations.java=UTF-8
 encoding//src/oop/pushdataindb/PushPersons.java=UTF-8

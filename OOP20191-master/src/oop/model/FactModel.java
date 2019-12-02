@@ -1,12 +1,12 @@
-package oop.fact;
+package oop.model;
 
-public class Fact {
+public class FactModel {
 	private String subject;
 	private String object;
 	private String relationShip;
 	private String time;
 
-	public Fact(String subject, String object, String relationShip, String time) {
+	public FactModel(String subject, String object, String relationShip, String time) {
 		super();
 		this.subject = subject;
 		this.object = object;

@@ -25,7 +25,6 @@ public class QueryArticle {
 			System.out.println("MoTa: " + aDocument.getAttribute("MoTa"));
 			System.out.println();
 		  });
-//		return cursor.next();
 	}
 	
 	

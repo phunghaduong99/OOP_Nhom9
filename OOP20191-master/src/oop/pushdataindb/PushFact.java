@@ -1,4 +1,4 @@
-package oop.fact;
+package oop.pushdataindb;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,7 @@ import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.BaseDocument;
 import oop.connectdb.ConnectArangoDB;
+import oop.model.FactModel;
 
 public class PushFact {
 	String collectionName;
@@ -33,7 +34,7 @@ public class PushFact {
 				int randomS = rd.nextInt(a_size);
 				int randomO = rd.nextInt(b_size);
 				int randomT = rd.nextInt(c_size);
-				Fact fact = new Fact(a.get(randomS), b.get(randomO), relation,
+				FactModel fact = new FactModel(a.get(randomS), b.get(randomO), relation,
 						c.get(randomT));
 				BaseDocument myObject = this.createBaseDocumentFact(fact, k, type);
 				listdocs.add(myObject);
@@ -47,7 +48,7 @@ public class PushFact {
 			System.err.println("Failed to import Fact: " + e.getMessage());
 		}
 	}
-	public BaseDocument createBaseDocumentFact(Fact fact, int k, String type) {
+	public BaseDocument createBaseDocumentFact(FactModel fact, int k, String type) {
 		BaseDocument myObject = new BaseDocument();
 		myObject.setKey(String.valueOf(k) + type);
 		myObject.addAttribute("Subject", fact.getSubject());
